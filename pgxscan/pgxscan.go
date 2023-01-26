@@ -128,9 +128,9 @@ func (api *API) ScanAll(dst interface{}, rows pgx.Rows) error {
 func (api *API) ScanOne(dst interface{}, rows pgx.Rows) error {
 	switch err := api.dbscanAPI.ScanOne(dst, NewRowsAdapter(rows)); {
 	case dbscan.NotFound(err):
-		return fmt.Errorf("%w", pgx.ErrNoRows)
+		return pgx.ErrNoRows
 	case err != nil:
-		return fmt.Errorf("%w", err)
+		return err
 	default:
 		return nil
 	}

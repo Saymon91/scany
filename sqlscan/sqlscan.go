@@ -125,9 +125,9 @@ func (api *API) ScanAll(dst interface{}, rows *sql.Rows) error {
 func (api *API) ScanOne(dst interface{}, rows *sql.Rows) error {
 	switch err := api.dbscanAPI.ScanOne(dst, rows); {
 	case dbscan.NotFound(err):
-		return fmt.Errorf("%w", sql.ErrNoRows)
+		return sql.ErrNoRows
 	case err != nil:
-		return fmt.Errorf("%w", err)
+		return err
 	default:
 		return nil
 	}
